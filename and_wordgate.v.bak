@@ -1,0 +1,22 @@
+module and_wordgate #(parameter w = 8)(
+  input [w-1:0]in,
+  output AND_
+);
+
+  wire [w-1:0]and_;
+
+  generate
+    genvar i;
+    for(i = 0 ; i < w ; i = i + 1) begin: and_instances
+      if(i == 0)
+        bitwise_and uut(.in_0(in[0]), in_1(in[1]), .and_(and_[0]));
+      else
+        bitwise_and uut(.in_0(in[i]), .in_1(and_[i-1]), .and_(and_[i]));
+    end
+  endgenerate
+  
+  assign AND_ = and_[w-1];
+  
+endmodule
+  
+  
